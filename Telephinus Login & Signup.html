@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="D:\Notepad ++/TLOGO.png" type="image/x-icon">
+    <title>Telephinus Login & Register</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url('wbbg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+            background: blue;
+            color: white;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background: darkblue;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            .button {
+                font-size: 14px;
+                padding: 10px;
+            }
+            input {
+                font-size: 12px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="selection-screen" class="container">
+        <h2>Select User Type</h2>
+        <button class="button" onclick="showLogin()">Student</button>
+        <button class="button" onclick="showLogin()">Teacher/Faculty</button>
+    </div>
+
+    <div id="login-screen" class="container" style="display: none;">
+        <h2>Login</h2>
+        <input type="email" id="login-email" placeholder="PCU Email"><br>
+        <input type="password" id="login-password" placeholder="Password"><br>
+        <button class="button" onclick="redirectToRegister()">Register</button>
+        <button class="button" onclick="login()">Login</button>
+        <button class="button" onclick="goBack()">Back</button>
+    </div>
+
+    <div id="register-screen" class="container" style="display: none;">
+        <h2>Register</h2>
+        <input type="text" id="first-name" placeholder="First Name"><br>
+        <input type="text" id="last-name" placeholder="Last Name"><br>
+        <input type="email" id="register-email" placeholder="PCU Email"><br>
+        <input type="date" id="birthdate"><br>
+        <input type="password" id="register-password" placeholder="Password"><br>
+        <input type="password" id="confirm-password" placeholder="Confirm Password"><br>
+        <label><input type="checkbox" id="terms"> Accept Terms & Conditions</label><br>
+        <button class="button" onclick="register()">Register</button>
+        <button class="button" onclick="goBack()">Back</button>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.getElementById('selection-screen').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'block';
+        }
+
+        function goBack() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('register-screen').style.display = 'none';
+            document.getElementById('selection-screen').style.display = 'block';
+        }
+
+        function redirectToRegister() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('register-screen').style.display = 'block';
+        }
+
+        function register() {
+            let firstName = document.getElementById("first-name").value;
+            let lastName = document.getElementById("last-name").value;
+            let email = document.getElementById("register-email").value;
+            let birthdate = document.getElementById("birthdate").value;
+            let password = document.getElementById("register-password").value;
+            let confirmPassword = document.getElementById("confirm-password").value;
+            let terms = document.getElementById("terms").checked;
+
+            if (!firstName || !lastName || !email || !birthdate || !password || !confirmPassword) {
+                alert("Please fill in all fields.");
+                return;
+            }
+            if (!terms) {
+                alert("You must accept the terms and conditions.");
+                return;
+            }
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+            
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            if (users.find(u => u.email === email)) {
+                alert("Email already registered!");
+                return;
+            }
+            users.push({ firstName, lastName, email, birthdate, password });
+            localStorage.setItem("users", JSON.stringify(users));
+            alert("Registered successfully!");
+            window.location.href = 'index.html';
+        }
+
+        function login() {
+            let email = document.getElementById("login-email").value;
+            let password = document.getElementById("login-password").value;
+            
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                alert("Login successful!");
+                window.location.href = 'dashboard.html';
+            } else {
+                alert("Invalid credentials!");
+            }
+        }
+    </script>
+</body>
+</html>

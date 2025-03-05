@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="D:\Notepad ++/TLOGO.png" type="image/x-icon">
+    <title>Telephinus Calendar</title>
+    <link rel="stylesheet" href="design.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Telephinus</h1>
+        <button id="activateCalendar">Activate Calendar</button>
+
+        <!-- Calendar Controls -->
+        <div id="calendarControls" class="hidden">
+            <label for="monthSelector">Month:</label>
+            <select id="monthSelector"></select>
+
+            <label for="yearSelector">Year:</label>
+            <select id="yearSelector"></select>
+
+            <button id="updateCalendar">Go</button>
+        </div>
+
+        <!-- Calendar Display -->
+        <div id="calendarContainer" class="hidden"></div>
+    </div>
+
+    <div id="notification-popup" class="popup">
+        <p>Allow <strong>Telephinus</strong> to send notifications?</p>
+        <button id="allow-btn">Allow</button>
+        <button id="deny-btn">Don't Allow</button>
+    </div>
+    
+
+    <script src="function.js"></script>
+</body>
+</html>

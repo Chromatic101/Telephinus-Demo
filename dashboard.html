@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="D:\Notepad ++/TLOGO.png" type="image/x-icon">
+    <title>Dashboard</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="welcomeMessage">Welcome, Student!</h1>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Fetch the logged-in user's info from localStorage
+        function displayUser() {
+            const email = localStorage.getItem("loggedInUser"); // Get the stored email
+            if (email) {
+                const user = JSON.parse(localStorage.getItem(email));
+                if (user) {
+                    document.getElementById("welcomeMessage").textContent = `Welcome, ${user.firstName} ${user.lastName}!`;
+                }
+            } else {
+                window.location.href = "index.html"; // Redirect if no user is logged in
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedInUser"); // Clear login session
+            window.location.href = "index.html"; // Redirect back to login page
+        }
+
+        // Run when page loads
+        displayUser();
+    </script>
+</body>
+</html>
